@@ -303,9 +303,9 @@ void emit_verilog(const char* moduleName, int bitWidth, int vectorSize, FILE *ou
   fprintf(out, "      logic [%d:0]Y[%d:0];\n",bitWidth-1,vectorSize-1);  
 #define G_OUTPUT(opstr) fprintf(out, "            %s\n", opstr);
   G_OUTPUT("always_ff @(posedge clk) begin");
-  G_OUTPUT("        if (reset)");
-  fprintf(out,"             X_input_reg <= %d'h0;\n", opBitwidth);  
-  G_OUTPUT("      else");
+  //G_OUTPUT("        if (reset)");
+  //fprintf(out,"             X_input_reg <= %d'h0;\n", opBitwidth);  
+  //G_OUTPUT("      else");
   G_OUTPUT("          X_input_reg <= X_packed;");
   G_OUTPUT("  end\n");
   G_OUTPUT(" genvar i;");
@@ -317,17 +317,18 @@ void emit_verilog(const char* moduleName, int bitWidth, int vectorSize, FILE *ou
   G_OUTPUT("   generate");
   fprintf(out,"      for (i = 0; i < %d; i = i + 1) begin : unpackY\n",vectorSize);
   G_OUTPUT(" 	  always_comb begin");
-  fprintf(out," 	     Y_output[i*%d +: %d] = Y[i];\n",vectorSize,bitWidth);
+  fprintf(out," 	     Y_packed[i*%d +: %d] = Y[i];\n",vectorSize,bitWidth);
   G_OUTPUT(" 	  end");
   G_OUTPUT("      end");
   G_OUTPUT("   endgenerate");
+  /*
   G_OUTPUT(" always_ff @(posedge clk) begin");
   G_OUTPUT("       if (reset)");
   fprintf(out,"         Y_packed <= %d'h0;\n",opBitwidth);
   G_OUTPUT("       else");
   G_OUTPUT("           Y_packed <= Y_output;");
   G_OUTPUT("   end");
-
+  */
 #undef G_OUTPUT  
   /* ---- declare all temporaries as wires -------------------------------- */
   Stmt *s = stmt_list;
