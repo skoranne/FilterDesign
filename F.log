@@ -1,0 +1,252 @@
+
+     _____       _            __   
+    / ___/____  (_)________ _/ /  
+    \__ \/ __ \/ / ___/ __ `/ / 
+   ___/ / /_/ / / /  / /_/ / /  
+  /____/ .___/_/_/   \__,_/_/  
+      /_/                                              
+
+  http://www.spiral.net                                   
+  Spiral 8.5.3
+----------------------------------------------------------   
+
+PID: 2890364
+
+spiral> spiral> spiral> spiral> spiral> spiral> spiral> spiral> spiral> comment("")
+spiral> comment("Fixed point analysis example with DFT")
+spiral> spiral> spiral> > > > spiral> spiral> spiral> spiral> spiral> spiral> 14
+spiral> 16384
+spiral> > > > > > > > > > > > > > > > function ( f, scale ) ... end
+spiral> > > > > > > > > Syntax error: warning, undefined global variable (symbol: 'IsReal')
+        if IsReal(f.v) or IsFloat(f.v) then
+                                          ^
+> > > > > > > > > > > > > > > > > > > > > > function ( f, scale ) ... end
+spiral> spiral> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > function ( f, scale ) ... end
+spiral> spiral> > > > > > Syntax error: warning, undefined global variable (symbol: 'IsReal')
+        if IsReal(f.v) or IsFloat(f.v) then
+                                          ^
+> > > > > > > > > > Syntax error: warning, undefined global variable (symbol: 'RecNames')
+        n := RecNames(f);
+                        ^
+> > > > > > > > > > > > > > > > > > > > > > function ( f, scale ) ... end
+spiral> spiral> <Spiral options record>
+spiral> spiral> 12
+spiral> 16
+spiral> spiral> false
+spiral> TInt
+spiral> TInt
+spiral> 'C'
+spiral> DFT(16, 1)
+spiral> DFT_DCT1andDST1( DFT(16, 1),
+  DCT1_DCT1and3( DCT1(9),
+    DCT1_DCT1and3( DCT1(5),
+      DCT1_DCT1and3( DCT1(3),
+        DCT1_Base2( DCT1(2) ) ),
+      DCT3_Base2( DCT3(2) ) ),
+    DCT3_toSkewDCT3( DCT3(4),
+      SkewDCT3_VarSteidl( SkewDTT(DCT3(4), 1/2),
+        SkewDTT_Base2( SkewDTT(DCT3(2), 1/4) ),
+        SkewDTT_Base2( SkewDTT(DCT3(2), 3/4) ) ) ) ),
+  DST1_toDCT3( DST1(7),
+    DCT3_toSkewDCT3( DCT3(8),
+      SkewDCT3_VarSteidlIterative( SkewDTT(DCT3(8), 1/2),
+        SkewDCT3_VarSteidlIterative( SkewDTT(DCT3(4), add(cond(i1, V(1), V(0)), div(mul(cond(i1, V(-1), V(1)), V(1/2)), V(2)))),
+          SkewDTT_Base2( SkewDTT(DCT3(2), add(cond(i2, V(1), V(0)), div(mul(cond(i2, V(-1), V(1)), add(cond(i1, V(1), V(0)), div(mul(cond(i1, V(-1), V(1)), V(1/2)), V(2)))), V(2)))) ) ) ) ) ) )
+spiral> spiral> spiral> DFT_CT( DFT(16, 1),
+  DFT_CT_Inplace( DFT(4, 1),
+    DFT_Base( DFT(2, 1) ),
+    DFT_Base( DFT(2, 1) ) ),
+  DFT_CT_Inplace( DFT(4, 1),
+    DFT_Base( DFT(2, 1) ),
+    DFT_Base( DFT(2, 1) ) ) )
+spiral> BB(
+  ISum(i5, 4,
+    ISum(i9, 2,
+      Scat(fTensor(fId(2), fBase(i9), fBase(i5), fId(2))) * 
+      Blk([ [ V(1), V(0), V(1), V(0) ], [ V(0), V(1), V(0), V(1) ], [ V(1), V(0), V(-1), V(0) ], [ V(0), V(1), V(0), V(-1) ] ]) * 
+      Gath(fTensor(fId(2), fBase(i9), fId(2)))
+    ) * 
+    ISum(i10, 2,
+      Scat(fTensor(fBase(i10), fId(4))) * 
+      RCDiag(fPrecompute(RCData(fCompose(dOmega(4, 1), diagTensor(fCompose(dLin(V(2), 1, 0, TInt), fBase(i10)), dLin(2, 1, 0, TInt))))), I(2)) * 
+      Blk([ [ V(1), V(0), V(1), V(0) ], [ V(0), V(1), V(0), V(1) ], [ V(1), V(0), V(-1), V(0) ], [ V(0), V(1), V(0), V(-1) ] ]) * 
+      Gath(fTensor(fId(2), fBase(i10), fBase(i5), fId(2)))
+    )
+  ) * 
+  ISum(i6, 4,
+    ISum(i13, 2,
+      Scat(fTensor(fBase(i6), fId(2), fBase(i13), fId(2))) * 
+      RCDiag(fPrecompute(RCData(fCompose(dOmega(16, 1), diagTensor(fCompose(dLin(V(4), 1, 0, TInt), fBase(i6)), fCompose(dLin(4, 1, 0, TInt), fTensor(fId(2), fBase(i13))))))), I(2)) * 
+      Blk([ [ V(1), V(0), V(1), V(0) ], [ V(0), V(1), V(0), V(1) ], [ V(1), V(0), V(-1), V(0) ], [ V(0), V(1), V(0), V(-1) ] ]) * 
+      Gath(fTensor(fId(2), fBase(i13), fId(2)))
+    ) * 
+    ISum(i14, 2,
+      Scat(fTensor(fBase(i14), fId(4))) * 
+      RCDiag(fPrecompute(RCData(fCompose(dOmega(4, 1), diagTensor(fCompose(dLin(V(2), 1, 0, TInt), fBase(i14)), dLin(2, 1, 0, TInt))))), I(2)) * 
+      Blk([ [ V(1), V(0), V(1), V(0) ], [ V(0), V(1), V(0), V(1) ], [ V(1), V(0), V(-1), V(0) ], [ V(0), V(1), V(0), V(-1) ] ]) * 
+      Gath(fTensor(fId(2), fBase(i14), fBase(i6), fId(2)))
+    )
+  )
+)
+spiral> program(
+   chain(
+      func(TVoid, "init", [  ], 
+         chain()
+      ),
+      func(TVoid, "transform", [ Y, X ], 
+         decl([ a129, a130, a131, a132, a133, a134, a135, a136, s49, s50, s51, s52, s53, s54, s55, s56, s57, s58, s59, s60, s61, s62, s63, s64, t377, t378, t379, t380, t381, t382, t383, t384, t385, t387, t388, t389, t390, t391, t392, t393, t394, t395, t396, t397, t398, t399, t400, t401, t402, t403, t404, t405, t406, t407, t408, t409, t410, t411, t412, t413, t414, t415, t416, t417, t418, t419, t420, t421, t422, t423, t424, t425, t426, t427, t428, t429, t430, t431, t432, t433, t434, t435, t436, t437, t438, t439, t440, t441, t442, t443, t444, t445, t446, t447, t448, t449, t450, t451, t452, t453, t454, t455, t456, t457, t458, t459, t460, t461, t462, t463, t464, t465 ],
+            chain(
+               assign(t377, add(nth(X, V(0)), nth(X, V(16)))),
+               assign(t378, add(nth(X, V(1)), nth(X, V(17)))),
+               assign(t379, sub(nth(X, V(0)), nth(X, V(16)))),
+               assign(t380, sub(nth(X, V(1)), nth(X, V(17)))),
+               assign(t381, add(nth(X, V(8)), nth(X, V(24)))),
+               assign(t382, add(nth(X, V(9)), nth(X, V(25)))),
+               assign(t383, sub(nth(X, V(8)), nth(X, V(24)))),
+               assign(t384, sub(nth(X, V(9)), nth(X, V(25)))),
+               assign(t385, add(t377, t381)),
+               assign(t387, add(t378, t382)),
+               assign(t388, sub(t377, t381)),
+               assign(t389, sub(t378, t382)),
+               assign(t390, sub(t379, t384)),
+               assign(t391, add(t380, t383)),
+               assign(t392, add(t379, t384)),
+               assign(t393, sub(t380, t383)),
+               assign(t394, add(nth(X, V(2)), nth(X, V(18)))),
+               assign(t395, add(nth(X, V(3)), nth(X, V(19)))),
+               assign(t396, sub(nth(X, V(2)), nth(X, V(18)))),
+               assign(t397, sub(nth(X, V(3)), nth(X, V(19)))),
+               assign(t398, add(nth(X, V(10)), nth(X, V(26)))),
+               assign(t399, add(nth(X, V(11)), nth(X, V(27)))),
+               assign(t400, sub(nth(X, V(10)), nth(X, V(26)))),
+               assign(t401, sub(nth(X, V(11)), nth(X, V(27)))),
+               assign(t402, add(t394, t398)),
+               assign(t403, add(t395, t399)),
+               assign(a129, mul(V(0.70710678118654757), sub(t394, t398))),
+               assign(a130, mul(V(0.70710678118654757), sub(t395, t399))),
+               assign(s49, sub(a129, a130)),
+               assign(s50, add(a129, a130)),
+               assign(t404, sub(t396, t401)),
+               assign(t405, add(t397, t400)),
+               assign(t406, add(t396, t401)),
+               assign(t407, sub(t397, t400)),
+               assign(s51, sub(mul(V(0.92387953251128674), t404), mul(V(0.38268343236508978), t405))),
+               assign(s52, add(mul(V(0.38268343236508978), t404), mul(V(0.92387953251128674), t405))),
+               assign(s53, sub(mul(V(0.38268343236508978), t406), mul(V(0.92387953251128674), t407))),
+               assign(s54, add(mul(V(0.92387953251128674), t406), mul(V(0.38268343236508978), t407))),
+               assign(t408, add(nth(X, V(4)), nth(X, V(20)))),
+               assign(t409, add(nth(X, V(5)), nth(X, V(21)))),
+               assign(t410, sub(nth(X, V(4)), nth(X, V(20)))),
+               assign(t411, sub(nth(X, V(5)), nth(X, V(21)))),
+               assign(t412, add(nth(X, V(12)), nth(X, V(28)))),
+               assign(t413, add(nth(X, V(13)), nth(X, V(29)))),
+               assign(t414, sub(nth(X, V(12)), nth(X, V(28)))),
+               assign(t415, sub(nth(X, V(13)), nth(X, V(29)))),
+               assign(t416, add(t408, t412)),
+               assign(t417, add(t409, t413)),
+               assign(t418, sub(t408, t412)),
+               assign(t419, sub(t409, t413)),
+               assign(a131, mul(V(0.70710678118654757), sub(t410, t415))),
+               assign(a132, mul(V(0.70710678118654757), add(t411, t414))),
+               assign(s55, sub(a131, a132)),
+               assign(s56, add(a131, a132)),
+               assign(a133, mul(V(0.70710678118654757), add(t410, t415))),
+               assign(a134, mul(V(0.70710678118654757), sub(t411, t414))),
+               assign(s57, add(a133, a134)),
+               assign(s58, sub(a133, a134)),
+               assign(t420, add(nth(X, V(6)), nth(X, V(22)))),
+               assign(t421, add(nth(X, V(7)), nth(X, V(23)))),
+               assign(t422, sub(nth(X, V(6)), nth(X, V(22)))),
+               assign(t423, sub(nth(X, V(7)), nth(X, V(23)))),
+               assign(t424, add(nth(X, V(14)), nth(X, V(30)))),
+               assign(t425, add(nth(X, V(15)), nth(X, V(31)))),
+               assign(t426, sub(nth(X, V(14)), nth(X, V(30)))),
+               assign(t427, sub(nth(X, V(15)), nth(X, V(31)))),
+               assign(t428, add(t420, t424)),
+               assign(t429, add(t421, t425)),
+               assign(a135, mul(V(0.70710678118654757), sub(t420, t424))),
+               assign(a136, mul(V(0.70710678118654757), sub(t421, t425))),
+               assign(s59, add(a135, a136)),
+               assign(s60, sub(a135, a136)),
+               assign(t430, sub(t422, t427)),
+               assign(t431, add(t423, t426)),
+               assign(t432, add(t422, t427)),
+               assign(t433, sub(t423, t426)),
+               assign(s61, sub(mul(V(0.38268343236508978), t430), mul(V(0.92387953251128674), t431))),
+               assign(s62, add(mul(V(0.92387953251128674), t430), mul(V(0.38268343236508978), t431))),
+               assign(s63, sub(mul(V(0.38268343236508978), t433), mul(V(0.92387953251128674), t432))),
+               assign(s64, add(mul(V(0.38268343236508978), t432), mul(V(0.92387953251128674), t433))),
+               assign(t434, add(t385, t416)),
+               assign(t435, add(t387, t417)),
+               assign(t436, sub(t385, t416)),
+               assign(t437, sub(t387, t417)),
+               assign(t438, add(t402, t428)),
+               assign(t439, add(t403, t429)),
+               assign(t440, sub(t402, t428)),
+               assign(t441, sub(t403, t429)),
+               assign(nth(Y, V(0)), add(t434, t438)),
+               assign(nth(Y, V(1)), add(t435, t439)),
+               assign(nth(Y, V(16)), sub(t434, t438)),
+               assign(nth(Y, V(17)), sub(t435, t439)),
+               assign(nth(Y, V(8)), sub(t436, t441)),
+               assign(nth(Y, V(9)), add(t437, t440)),
+               assign(nth(Y, V(24)), add(t436, t441)),
+               assign(nth(Y, V(25)), sub(t437, t440)),
+               assign(t442, add(t390, s55)),
+               assign(t443, add(t391, s56)),
+               assign(t444, sub(t390, s55)),
+               assign(t445, sub(t391, s56)),
+               assign(t446, add(s51, s61)),
+               assign(t447, add(s52, s62)),
+               assign(t448, sub(s51, s61)),
+               assign(t449, sub(s52, s62)),
+               assign(nth(Y, V(2)), add(t442, t446)),
+               assign(nth(Y, V(3)), add(t443, t447)),
+               assign(nth(Y, V(18)), sub(t442, t446)),
+               assign(nth(Y, V(19)), sub(t443, t447)),
+               assign(nth(Y, V(10)), sub(t444, t449)),
+               assign(nth(Y, V(11)), add(t445, t448)),
+               assign(nth(Y, V(26)), add(t444, t449)),
+               assign(nth(Y, V(27)), sub(t445, t448)),
+               assign(t450, sub(t388, t419)),
+               assign(t451, add(t389, t418)),
+               assign(t452, add(t388, t419)),
+               assign(t453, sub(t389, t418)),
+               assign(t454, sub(s49, s59)),
+               assign(t455, add(s50, s60)),
+               assign(t456, add(s49, s59)),
+               assign(t457, sub(s50, s60)),
+               assign(nth(Y, V(4)), add(t450, t454)),
+               assign(nth(Y, V(5)), add(t451, t455)),
+               assign(nth(Y, V(20)), sub(t450, t454)),
+               assign(nth(Y, V(21)), sub(t451, t455)),
+               assign(nth(Y, V(12)), sub(t452, t457)),
+               assign(nth(Y, V(13)), add(t453, t456)),
+               assign(nth(Y, V(28)), add(t452, t457)),
+               assign(nth(Y, V(29)), sub(t453, t456)),
+               assign(t458, sub(t392, s57)),
+               assign(t459, add(t393, s58)),
+               assign(t460, add(t392, s57)),
+               assign(t461, sub(t393, s58)),
+               assign(t462, add(s53, s63)),
+               assign(t463, sub(s54, s64)),
+               assign(t464, sub(s53, s63)),
+               assign(t465, add(s54, s64)),
+               assign(nth(Y, V(6)), add(t458, t462)),
+               assign(nth(Y, V(7)), add(t459, t463)),
+               assign(nth(Y, V(22)), sub(t458, t462)),
+               assign(nth(Y, V(23)), sub(t459, t463)),
+               assign(nth(Y, V(14)), sub(t460, t465)),
+               assign(nth(Y, V(15)), add(t461, t464)),
+               assign(nth(Y, V(30)), add(t460, t465)),
+               assign(nth(Y, V(31)), sub(t461, t464))
+            )
+         )
+      ),
+      func(TVoid, "destroy", [  ], 
+         skip()
+      )
+   )
+)
+spiral> spiral> spiral> spiral> spiral> TInt
+spiral> spiral> spiral> spiral> spiral> spiral> spiral> 
