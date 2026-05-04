@@ -36,25 +36,26 @@ Found and reported 0 problems.
 
 === SDT_16 ===
 
-   Number of wires:              56176
-   Number of wire bits:          62035
-   Number of public wires:          95
-   Number of public wire bits:    5954
+   Number of wires:              49659
+   Number of wire bits:          67709
+   Number of public wires:         182
+   Number of public wire bits:    9730
    Number of memories:               0
    Number of memory bits:            0
    Number of processes:              0
-   Number of cells:              58103
-     $_ANDNOT_                   16951
-     $_AND_                        353
-     $_NAND_                       559
-     $_NOR_                       7531
-     $_NOT_                       2868
-     $_ORNOT_                     2644
-     $_OR_                        7662
-     $_SDFF_PP0_                  1024
-     $_XNOR_                      5764
-     $_XOR_                      12747
-
+   Number of cells:              60127
+     $_ANDNOT_                   15494
+     $_AND_                       1591
+     $_DFF_P_                     4462
+     $_MUX_                          5
+     $_NAND_                      1072
+     $_NOR_                       7408
+     $_NOT_                        970
+     $_ORNOT_                     1586
+     $_OR_                        7586
+     $_SDFF_PP0_                  2018
+     $_XNOR_                      5794
+     $_XOR_                      12141
 
 read_liberty -overwrite -setattr liberty_cell -ignore_miss_func $PDK/sky130_fd_sc_hd__ff_n40C_1v65.lib
 abc -liberty $PDK/sky130_fd_sc_hd__ff_n40C_1v65.lib
@@ -84,9 +85,25 @@ Reenabled ALUMAC sharing
   "DRT_THREADS": 32,
   "pdk::sky130A": {
     "FP_SIZING": "relative",
-    "PL_TARGET_DENSITY": 0.30
+    "PL_TARGET_DENSITY_PCT": 45
+  }
+}
+{
+  "DESIGN_NAME": "SDT_16",
+  "VERILOG_FILES": "dir::src/*.v",
+  "CLOCK_PORT": "clk",
+  "CLOCK_PERIOD": 40.0,
+  "PNR_SDC_FILE": "dir::src/constraints.sdc",
+  "DRT_THREADS": 32,
+  "ROUTING_CORES": 32,
+  "CTS_SINK_CLUSTERING_SIZE": 20,
+  "pdk::sky130A": {
+    "FP_SIZING": "relative",
+    "PL_TARGET_DENSITY_PCT": 40
   }
 }
 ```
+For the SDT_16 block here is the final view on SKYWATER 130A produced by OpenROAD (Librelane) flow
+![SDT_16](SDT_16.png)
 
 

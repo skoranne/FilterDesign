@@ -281,7 +281,7 @@ static void emit_expr(FILE *out, Expr *e) {
 /* Simple heuristic: any identifier that appears as a left‑hand side
    becomes a wire, any identifier that appears in a parameter list
    becomes a port.
-   wire. */
+*/
 void emit_verilog(const char* moduleName, int bitWidth, int vectorSize, FILE *out) {
   int opBitwidth = bitWidth * vectorSize;
   //fprintf(out, "`timescale 1ns/1ps\n");
@@ -289,7 +289,7 @@ void emit_verilog(const char* moduleName, int bitWidth, int vectorSize, FILE *ou
   fprintf(out, "module %s (\n", moduleName);
   /* ---- ports ------------------------------------------------------- */
   /* In a real implementation you would collect the names that appear
-     inside the parameter list (X, _Y).  For brevity we hard‑code them
+     inside the parameter list (X, Y).  For brevity we hard‑code them
      here – adjust to your own function signature. */
   fprintf(out, "    input logic clk,\n");
   fprintf(out, "    input logic reset,\n");    
@@ -303,9 +303,9 @@ void emit_verilog(const char* moduleName, int bitWidth, int vectorSize, FILE *ou
   fprintf(out, "      logic [%d:0]Y[%d:0];\n",bitWidth-1,vectorSize-1);  
 #define G_OUTPUT(opstr) fprintf(out, "            %s\n", opstr);
   G_OUTPUT("always_ff @(posedge clk) begin");
-  //G_OUTPUT("        if (reset)");
-  //fprintf(out,"             X_input_reg <= %d'h0;\n", opBitwidth);  
-  //G_OUTPUT("      else");
+  G_OUTPUT("        if (reset)");
+  fprintf(out,"             X_input_reg <= %d'h0;\n", opBitwidth);  
+  G_OUTPUT("      else");
   G_OUTPUT("          X_input_reg <= X_packed;");
   G_OUTPUT("  end\n");
   G_OUTPUT(" genvar i;");
@@ -339,14 +339,16 @@ void emit_verilog(const char* moduleName, int bitWidth, int vectorSize, FILE *ou
   fprintf(out, "\n");
 
   /* ---- generate assignments ------------------------------------------- */
+  //fprintf(out, "always_comb begin\n");
+  fprintf(out, "always_ff @(posedge clk) begin\n");
   s = stmt_list;
   while (s) {
-    fprintf(out, "assign %s = ", s->lhs);
+    fprintf(out, "\t\t%s <= ", s->lhs); // NOTE: this is for Sequential
     emit_expr(out, s->rhs);
     fprintf(out, ";\n");
     s = s->next;
   }
-
+  fprintf(out, "end\n");
   fprintf(out, "\nendmodule\n");
 }
 
