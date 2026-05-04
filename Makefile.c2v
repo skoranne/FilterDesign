@@ -1,0 +1,33 @@
+################################################################################
+# File   : Makefile
+# Author : Sandeep Koranne (C) 2026. All rights reserved.
+# Purpose: Lex/Yacc translator from C to System Verilog.
+#        : given filter code from SPIRAL convert to Verilog, and fixed point.
+################################################################################
+# -------------------------------------------------
+# Simple Makefile for the C‑to‑Verilog front‑end
+# -------------------------------------------------
+CC      = gcc
+CFLAGS  = -Wall -ggdb -O0
+FLEX    = flex
+BISON   = bison -d
+
+all: c2v
+
+c2v: dftrtl.tab.o lex.yy.o
+	$(CC) $(CFLAGS)  -o $@ $^
+
+dftrtl.tab.c dftrtl.tab.h: dftrtl.y dftrtl.l
+	$(BISON) -d -v dftrtl.y          # generates dftrtl.tab.c & .h
+
+lex.yy.c: dftrtl.l dftrtl.tab.h
+	$(FLEX) dftrtl.l               # generates lex.yy.c
+
+dftrtl.tab.o: dftrtl.tab.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+lex.yy.o: lex.yy.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f *.o dftrtl.tab.c dftrtl.tab.h dftrtl.output lex.yy.c c2v
